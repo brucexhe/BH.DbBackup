@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BH.DbBackup\BH.DbBackup.Core.csproj" />
+    <ProjectReference Include="..\BH.DbBackup.Core\BH.DbBackup.Core.csproj" />
   </ItemGroup>
 
 </Project>

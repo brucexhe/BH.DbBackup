@@ -12,12 +12,22 @@ namespace BH.DbBackup.Core
 
         public IActionResult Index()
         {
+            //read config
+            if (true)
+            {
+
+            }
 
             return Content(ResourceUtil.GetResource("static/index.html"), "text/html");
             //return View();// Content("db backup index");
         }
 
-        public IActionResult GetResource(string fileName)
+        public IActionResult Config()
+        {
+            return Content(ResourceUtil.GetResource("static/config.html"), "text/html");
+        }
+
+            public IActionResult GetResource(string fileName)
         {
             return Content(ResourceUtil.GetResource(fileName));
         }
