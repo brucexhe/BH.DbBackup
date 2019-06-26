@@ -3,22 +3,75 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <script type="text/javascript" src="/DbBackup/GetResource?fileName=static/js/jquery.min.js"></script>
     <title></title>
+    <script>
+        function changeBackuptype() {
+
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <div>
-            <h2>Config</h2>
-        </div>
+        
         <div class="form">
             <form>
+                <div>
+                    <h2>Database Config</h2>
+                </div>
                 <table>
                     <tr>
                         <td>Database Type: </td>
                         <td>
-                            <select name="dbType">
-                                <option value="Mysql">Mysql</option>
+                            <select name="dbType" class="form-control">
+                                <option value="mysql" selected>Mysql</option>
+                                <option value="sqlserver">Sql Server</option>
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Database Server: </td>
+                        <td>
+                            <input type="text" name="server" value="localhost" class="form-control" />
+                            <span class="tip"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>UserName: </td>
+                        <td>
+                            <input type="text" name="username" value="" class="form-control" />
+                            <span class="tip"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td>
+                            <input type="text" name="password" value="" class="form-control" />
+                            <span class="tip"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    <h2>Backup Config</h2>
+                </div>
+                <table>
+                    <tr>
+                        <td>Backup Time: </td>
+                        <td>
+                            <select name="backuptype" class="form-control" onchange="changeBackuptype">
+                                <option value="daily" selected>Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+
+                            <input type="number" class="backuptime" id="backuptime" /><span class="backupunit" id="backupunit"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Backup Position: </td>
+                        <td>
+                            <input type="text" class="backupposition" id="backupposition"  value="./dbbackup"/>
                         </td>
                     </tr>
                 </table>
