@@ -7,12 +7,19 @@ namespace BH.DbBackup.Core
 {
     public class ConfigUtil
     {
+        static String configFile = "DbBackup.json";
         static ConfigurationRoot config;
+        public static bool isInitial = true;
         static ConfigUtil()
         {
-            if (System.IO.File.Exists("DbBackup.json"))
+            if (!System.IO.File.Exists(configFile))
             {
+                isInitial = false;
 
+                using (var sw = new System.IO.StreamWriter(configFile))
+                {
+                    DbBackupConfig c = new DbBackupConfig();
+                }
             }
             var builder = new ConfigurationBuilder();
             builder.AddJsonFile("DbBackup.json");

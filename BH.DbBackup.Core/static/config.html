@@ -23,7 +23,7 @@
                     <tr>
                         <td>Database Type: </td>
                         <td>
-                            <select name="dbType" class="form-control">
+                            <select name="dbtype" class="form-control">
                                 <option value="mysql" selected>Mysql</option>
                                 <option value="sqlserver">Sql Server</option>
                             </select>
@@ -59,19 +59,19 @@
                     <tr>
                         <td>Backup Time: </td>
                         <td>
-                            <select name="backuptype" class="form-control" onchange="changeBackuptype">
+                            <select name="timetype" class="form-control" onchange="changeBackuptype">
                                 <option value="daily" selected>Daily</option>
                                 <option value="weekly">Weekly</option>
                                 <option value="monthly">Monthly</option>
                             </select>
 
-                            <input type="number" class="backuptime" id="backuptime" /><span class="backupunit" id="backupunit"></span>
+                            <input type="number" class="time" id="time" /><span class="backupunit" id="backupunit"></span>
                         </td>
                     </tr>
                     <tr>
                         <td>Backup Position: </td>
                         <td>
-                            <input type="text" class="backupposition" id="backupposition"  value="./dbbackup"/>
+                            <input type="text" class="position" id="position"  value="./dbbackup"/>
                         </td>
                     </tr>
                 </table>
