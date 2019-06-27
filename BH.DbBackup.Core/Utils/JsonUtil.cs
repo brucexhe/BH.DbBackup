@@ -2,31 +2,37 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BH.DbBackup.Core.Utils
+namespace BH.DbBackup.Core
 {
     public class JsonUtil
     {
-        public static string ToJsonString<T>(T t) where T : class, new()
+        public static string ToJsonString(Object t)
         {
             StringBuilder json = new StringBuilder();
             json.Append("{");
             bool first = true;
-            foreach (var item in typeof(T).GetProperties())
+            foreach (var item in t.GetType().GetProperties())
             {
-                if (first)
+                if (!first)
                 {
-                    json.Append("\", ");
+                    json.Append(", ");
+                }
+                else
+                { 
                     first = false;
                 }
-                
+
+                json.Append(Environment.NewLine);
+                json.Append("\t");
                 json.Append("\"");
                 json.Append(item.Name);
                 json.Append("\"");
                 json.Append(": ");
                 json.Append("\"");
                 json.Append(item.GetValue(t));
-                json.Append(Environment.NewLine);
+                json.Append("\"");
             }
+            json.Append(Environment.NewLine);
             json.Append("}");
 
             return json.ToString();

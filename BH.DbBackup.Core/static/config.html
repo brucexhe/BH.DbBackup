@@ -9,13 +9,16 @@
         function changeBackuptype() {
 
         }
+        function save() {
+
+        }
     </script>
 </head>
 <body>
     <div class="container">
         
         <div class="form">
-            <form>
+            <form name="form" action="saveConfig">
                 <div>
                     <h2>Database Config</h2>
                 </div>
@@ -71,10 +74,16 @@
                     <tr>
                         <td>Backup Position: </td>
                         <td>
-                            <input type="text" class="position" id="position"  value="./dbbackup"/>
+                            <select name="positiontype" class="form-control" onchange="changeBackuptype">
+                                <option value="local" selected>Local</option>
+                                <option value="baiducloud">Baidu Cloud</option>
+                                <option value="googlecloud">Google Cloud</option>
+                            </select>
+                            <input type="text" class="position" id="position" value="./dbbackup" />
                         </td>
                     </tr>
                 </table>
+                <div><input onclick="save()" type="button" value="Save" /></div>
             </form>
 
         </div>

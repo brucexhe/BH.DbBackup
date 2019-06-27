@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.Extensions.FileProviders;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace BH.DbBackup.Core
 {
@@ -13,9 +14,9 @@ namespace BH.DbBackup.Core
         public IActionResult Index()
         {
             //read config
-            if (true)
+            if (!ConfigUtil.hasInitial())
             {
-
+                return RedirectToAction("Config");
             }
 
             return Content(ResourceUtil.GetResource("static/index.html"), "text/html");
@@ -37,6 +38,12 @@ namespace BH.DbBackup.Core
             List<String> dbList = new List<string>();
             dbList.Add("mysql");
             return Json(dbList);
+        }
+
+        [HttpPost]
+        public IActionResult SaveConfig(FormCollection form)
+        {
+            return RedirectToAction("Index");
         }
     }
 }
