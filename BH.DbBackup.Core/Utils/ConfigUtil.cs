@@ -44,6 +44,27 @@ namespace BH.DbBackup.Core
 
         }
 
+        public static bool Write(DbBackupConfig conf)
+        {
+            try
+            {
+                if (System.IO.File.Exists(configFile))
+                {
+                    using (var sw = new System.IO.StreamWriter(configFile))
+                    {
+                        var json = JsonUtil.ToJsonString(conf);
+                        sw.Write(json);
+                        return true;
+                    }
+                }
+            }
+            catch  
+            {
+            }
+
+            return false;
+        }
+
         public static bool hasInitial()
         {
             return initial;

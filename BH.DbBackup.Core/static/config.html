@@ -10,7 +10,7 @@
 
         }
         function save() {
-
+            $("form").submit();
         }
     </script>
 </head>
@@ -18,7 +18,7 @@
     <div class="container">
         
         <div class="form">
-            <form name="form" action="saveConfig">
+            <form name="form" action="saveConfig" method="post">
                 <div>
                     <h2>Database Config</h2>
                 </div>

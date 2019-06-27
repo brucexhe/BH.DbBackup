@@ -28,7 +28,7 @@ namespace BH.DbBackup.Core
             return Content(ResourceUtil.GetResource("static/config.html"), "text/html");
         }
 
-            public IActionResult GetResource(string fileName)
+        public IActionResult GetResource(string fileName)
         {
             return Content(ResourceUtil.GetResource(fileName));
         }
@@ -41,8 +41,10 @@ namespace BH.DbBackup.Core
         }
 
         [HttpPost]
-        public IActionResult SaveConfig(FormCollection form)
+        public IActionResult SaveConfig(IFormCollection form)
         {
+            ConfigUtil.Write(FormUtil.ToModel<DbBackupConfig>(form));
+
             return RedirectToAction("Index");
         }
     }
