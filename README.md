@@ -1,3 +1,3 @@
 # BH.DbBackup
-v1.2
+v1.3
 The backup management of the database
