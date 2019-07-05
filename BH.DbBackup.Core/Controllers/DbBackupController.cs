@@ -6,6 +6,7 @@ using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Ionic.Zip;
 
 namespace BH.DbBackup.Core
 {
@@ -102,7 +103,7 @@ namespace BH.DbBackup.Core
                 var backupInfo = new BackupInfo()
                 {
                     Name = f.Name,
-                    Size =  (Math.Floor(Convert.ToDecimal(f.Length) / 1024))+"KB",
+                    Size = (Math.Floor(Convert.ToDecimal(f.Length) / 1024)) + "KB",
                     Time = f.CreationTime.ToString(),
                     Position = config.positiontype
                 };
@@ -111,6 +112,32 @@ namespace BH.DbBackup.Core
             return Json(list);
         }
 
+        [HttpGet]
+        public IActionResult BackupManually(string db)
+        {
+            var config = ConfigUtil.GetConfig();
+            var path = AppDomain.CurrentDomain.BaseDirectory + "DbBackup\\" + db;
+            //backup temp file
 
+            //zip
+            ZipUtil.Zip(path + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".sql");
+
+            //remove temp file
+
+            return Content("");
+        }
+
+        [HttpGet]
+        public IActionResult Rollback(string db, string name)
+        {
+            var filename = AppDomain.CurrentDomain.BaseDirectory + "DbBackup\\" + db + "\\" + name;
+
+            //UnZip
+            ZipUtil.UnZip(filename);
+
+            //remove temp file
+
+            return Content("");
+        }
     }
 }

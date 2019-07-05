@@ -6,12 +6,22 @@
     <title></title>
     <style>
         table {
+            width:700px;
             border-left: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
-        td {
+
+        td, th {
             border: 1px solid #ddd;
             padding: 5px 10px;
-            border-left:none;
+            border-left: none;
+            border-bottom: none;
+        }
+        input,select{
+            padding:5px 10px;
+        }
+        .row{
+            margin-bottom:20px;
         }
     </style>
     <script type="text/javascript" src="/DbBackup/GetResource?fileName=static/js/jquery.min.js"></script>
@@ -24,13 +34,25 @@
                 $("#dbListTmpl").tmpl(res).appendTo('#dbList');
             });
 
-            $("#dbList").change(function () {
-
-                var select = $(this).find('option:selected').val();
+            var loadDbList = function () {
+                var select = $("#dbList").find('option:selected').val();
                 console.log(select);
                 $.get("DbBackup/GetBackupList?db=" + select, function (res) {
                     console.log(res);
+                    $('#backupList').html("");
                     $("#backupListTmpl").tmpl(res).appendTo('#backupList');
+                });
+            }
+            $("#dbList").change(function () {
+
+                loadDbList();
+            });
+
+            $("#BackupManually").click(function () {
+                var select = $("#dbList").find('option:selected').val();
+                console.log(select);
+                $.get("DbBackup/BackupManually?db=" + select, function (res) {
+                    loadDbList();
                 });
             });
 
@@ -46,24 +68,28 @@
             <td>${size}</td>
             <td>${position}</td>
             <td>${time}</td>
+            <td><a>delete</a> | <a>rollback</a></td>
         </tr>
     </script>
 </head>
 <body>
     <div>
-        <div> <h1>Database Auto Backup</h1></div>
-        <div>
+        <div class="row"> <h1>Database Auto Backup</h1></div>
+        <div class="row">
             <select id="dbList" class="dbList" name="dbList">
                 <option>Please Select a Database</option>
             </select>
+
+            <input type="button" id="BackupManually" class="BackupManually" name="BackupManually" value="Backup Manually" />
         </div>
-        <div>
+        <div class="row">
             <table id="backupList" class="backupList" cellpadding="0" cellspacing="0">
                 <tr>
                     <th>Name</th>
                     <th>Size</th>
                     <th>Position</th>
                     <th>Time</th>
+                    <th>Operation</th>
                 </tr>
 
             </table>
