@@ -8,6 +8,7 @@ namespace BH.DbBackup.Core
     {
         public string dbtype { get; set; }
         public string server { get; set; }
+        public string dbname { get; set; }        
         public string username { get; set; }
         public string password { get; set; }
         public string timetype { get; set; }

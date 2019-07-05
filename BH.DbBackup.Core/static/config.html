@@ -12,6 +12,14 @@
         function save() {
             $("form").submit();
         }
+        function connectTest() {
+            $.post("ConnectTest", $("form").serialize(), function (res) {
+                console.log(res);
+                if (res == "True") {
+
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -27,8 +35,8 @@
                         <td>Database Type: </td>
                         <td>
                             <select name="dbtype" class="form-control">
-                                <option value="mysql" selected>Mysql</option>
-                                <option value="sqlserver">Sql Server</option>
+                                <option value="MySql" selected>Mysql</option>
+                                <option value="SqlServer">Sql Server</option>
                             </select>
                         </td>
                     </tr>
@@ -36,6 +44,13 @@
                         <td>Database Server: </td>
                         <td>
                             <input type="text" name="server" value="localhost" class="form-control" />
+                            <span class="tip"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Database Name: </td>
+                        <td>
+                            <input type="text" name="dbname" value="" class="form-control" />
                             <span class="tip"></span>
                         </td>
                     </tr>
@@ -51,6 +66,7 @@
                         <td>
                             <input type="text" name="password" value="" class="form-control" />
                             <span class="tip"></span>
+                            <a href="javascript:connectTest()">Connect Test</a>
                         </td>
                     </tr>
                 </table>

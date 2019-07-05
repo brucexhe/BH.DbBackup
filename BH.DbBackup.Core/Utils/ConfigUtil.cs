@@ -15,7 +15,7 @@ namespace BH.DbBackup.Core
             try
             {
                 var builder = new ConfigurationBuilder();
-                builder.AddJsonFile("DbBackup.json");
+                builder.AddJsonFile("DbBackup.json", false, true);
 
                 config = builder.Build() as ConfigurationRoot;
                 initial = true;
@@ -44,6 +44,24 @@ namespace BH.DbBackup.Core
 
         }
 
+        public static ConfigurationRoot ReLoadConfig()
+        {
+            try
+            {
+                var builder = new ConfigurationBuilder();
+                builder.AddJsonFile("DbBackup.json", false, true);
+
+                config = builder.Build() as ConfigurationRoot;
+                initial = true;
+            }
+            catch
+            {
+                initial = false;
+            }
+
+            return config;
+        }
+
         public static bool Write(DbBackupConfig conf)
         {
             try
@@ -54,11 +72,14 @@ namespace BH.DbBackup.Core
                     {
                         var json = JsonUtil.ToJsonString(conf);
                         sw.Write(json);
-                        return true;
                     }
+
+                    ReLoadConfig();
+                    var t = config["username"];
+                    return true;
                 }
             }
-            catch  
+            catch
             {
             }
 
@@ -72,6 +93,23 @@ namespace BH.DbBackup.Core
         public static string Read(string key)
         {
             return config[key];
+        }
+
+        public static DbBackupConfig GetConfig()
+        {
+            if (config == null || initial  == false)
+            {
+                ReLoadConfig();
+            }
+
+            DbBackupConfig dbBackupConfig = new DbBackupConfig();
+
+            foreach (var item in dbBackupConfig.GetType().GetProperties())
+            {
+                item.SetValue(dbBackupConfig, config[item.Name]);
+            }
+
+            return dbBackupConfig;
         }
     }
 }

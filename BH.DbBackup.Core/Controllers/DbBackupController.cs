@@ -41,6 +41,16 @@ namespace BH.DbBackup.Core
         }
 
         [HttpPost]
+        public IActionResult ConnectTest(DbBackupConfig config)
+        {
+            ConfigUtil.Write(config);
+
+            bool result = DbFactory.GetDbInstance().ConnectTest();
+
+            return Content(result.ToString());
+        }
+
+        [HttpPost]
         public IActionResult SaveConfig(IFormCollection form)
         {
             ConfigUtil.Write(FormUtil.ToModel<DbBackupConfig>(form));
