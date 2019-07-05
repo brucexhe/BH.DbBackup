@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BH.DbBackup.Core
 {
@@ -33,7 +34,7 @@ namespace BH.DbBackup.Core
             return Content(ResourceUtil.GetResource(fileName));
         }
 
-        public JsonResult GetDbList()
+        public JsonResult GetDbTypeList()
         {
             List<String> dbList = new List<string>();
             dbList.Add("mysql");
@@ -72,9 +73,44 @@ namespace BH.DbBackup.Core
 
         [HttpPost]
         public IActionResult Login(IFormCollection form)
-        { 
+        {
 
             return RedirectToAction("Index");
         }
+
+
+        [HttpGet]
+        public IActionResult GetDbList()
+        {
+            return Json(DbFactory.GetDbInstance().GetDbList());
+        }
+
+        [HttpGet]
+        public IActionResult GetBackupList(string db)
+        {
+            var config = ConfigUtil.GetConfig();
+            var path = AppDomain.CurrentDomain.BaseDirectory + "\\DbBackup\\" + db;
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+            var files = System.IO.Directory.GetFiles(path);
+            List<BackupInfo> list = new List<BackupInfo>();
+            foreach (var file in files)
+            {
+                var f = new FileInfo(file);
+                var backupInfo = new BackupInfo()
+                {
+                    Name = f.Name,
+                    Size =  (Math.Floor(Convert.ToDecimal(f.Length) / 1024))+"KB",
+                    Time = f.CreationTime.ToString(),
+                    Position = config.positiontype
+                };
+                list.Add(backupInfo);
+            }
+            return Json(list);
+        }
+
+
     }
 }

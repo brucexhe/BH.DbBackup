@@ -10,5 +10,7 @@ namespace BH.DbBackup.Core
         DbConnection GetConnection();
 
         bool ConnectTest();
+
+        List<DbInfo> GetDbList();
     }
 }

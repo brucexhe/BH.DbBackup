@@ -47,6 +47,28 @@ namespace BH.DbBackup.Core
             return false;
         }
 
+        public List<DbInfo> GetDbList()
+        {
+            var list = new List<DbInfo>();
+            using (MySqlConnection conn = (MySqlConnection)GetConnection())
+            {
+                conn.Open();
 
+                using (MySqlCommand cmd = new MySqlCommand("show databases;", conn))
+                {
+                    using (MySqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            list.Add(new DbInfo() { Name = rdr[0].ToString() });
+                        }
+                    }
+
+
+                }
+
+            }
+            return list;
+        }
     }
 }

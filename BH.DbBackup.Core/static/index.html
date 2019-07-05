@@ -4,14 +4,71 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <style>
+        table {
+            border-left: 1px solid #ddd;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-left:none;
+        }
+    </style>
     <script type="text/javascript" src="/DbBackup/GetResource?fileName=static/js/jquery.min.js"></script>
     <script>
-        $(function(){
+        $(function () {
             console.log("version:1.0.0");
+
+            $.get("DbBackup/GetDbList", function (res) {
+                console.log(res);
+                $("#dbListTmpl").tmpl(res).appendTo('#dbList');
+            });
+
+            $("#dbList").change(function () {
+
+                var select = $(this).find('option:selected').val();
+                console.log(select);
+                $.get("DbBackup/GetBackupList?db=" + select, function (res) {
+                    console.log(res);
+                    $("#backupListTmpl").tmpl(res).appendTo('#backupList');
+                });
+            });
+
         });
+
+    </script>
+    <script id="dbListTmpl" type="text/x-jquery-tmpl">
+        <option value='${name}'>${name}</option>
+    </script>
+    <script id="backupListTmpl" type="text/x-jquery-tmpl">
+        <tr>
+            <td>${name}</td>
+            <td>${size}</td>
+            <td>${position}</td>
+            <td>${time}</td>
+        </tr>
     </script>
 </head>
 <body>
-    index page
+    <div>
+        <div> <h1>Database Auto Backup</h1></div>
+        <div>
+            <select id="dbList" class="dbList" name="dbList">
+                <option>Please Select a Database</option>
+            </select>
+        </div>
+        <div>
+            <table id="backupList" class="backupList" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Position</th>
+                    <th>Time</th>
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
 </body>
 </html>
