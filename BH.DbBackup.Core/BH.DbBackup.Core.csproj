@@ -8,12 +8,14 @@
     <None Remove="static\config.html" />
     <None Remove="static\index.html" />
     <None Remove="static\js\jquery.min.js" />
+    <None Remove="static\login.html" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="static\config.html" />
     <EmbeddedResource Include="static\index.html" />
     <EmbeddedResource Include="static\js\jquery.min.js" />
+    <EmbeddedResource Include="static\login.html" />
   </ItemGroup>
 
   <ItemGroup>

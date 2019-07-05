@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/DbBackup/GetResource?fileName=static/js/jquery.min.js"></script>
+    <title></title>
+    <style>
+        .tip {
+            padding: 2px 5px;
+            color: #ff0000;
+        }
+    </style>
+    <script>
+       
+        function save() {
+            $("form").submit();
+        } 
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <div class="form">
+            <form name="form" action="login" method="post">
+                <div>
+                    <h2>Login</h2>
+                </div>
+                <table> 
+                    <tr>
+                        <td>Password: </td>
+                        <td>
+                            <input type="password" name="password" value="" class="form-control" /> 
+                        </td>
+                    </tr>
+                </table>
+                 
+                <div><input onclick="save()" type="button" value="Save" /></div>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

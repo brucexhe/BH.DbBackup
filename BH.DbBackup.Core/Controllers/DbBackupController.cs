@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BH.DbBackup.Core
 {
-    public class DbBackupController : Controller
+    public class DbBackupController : BaseController
     {
 
         public IActionResult Index()
@@ -50,10 +50,29 @@ namespace BH.DbBackup.Core
             return Content(result.ToString());
         }
 
+        [HttpGet]
+        public IActionResult GetConfig()
+        {
+            return Json(ConfigUtil.GetConfig());
+        }
+
         [HttpPost]
         public IActionResult SaveConfig(IFormCollection form)
         {
             ConfigUtil.Write(FormUtil.ToModel<DbBackupConfig>(form));
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return Content(ResourceUtil.GetResource("static/login.html"), "text/html");
+        }
+
+        [HttpPost]
+        public IActionResult Login(IFormCollection form)
+        { 
 
             return RedirectToAction("Index");
         }

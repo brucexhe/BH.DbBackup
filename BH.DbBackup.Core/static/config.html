@@ -5,7 +5,25 @@
     <meta charset="utf-8" />
     <script type="text/javascript" src="/DbBackup/GetResource?fileName=static/js/jquery.min.js"></script>
     <title></title>
+    <style>
+        .tip{
+            padding:2px 5px; 
+            color:#ff0000;
+            
+        }
+    </style>
     <script>
+        $(function () {
+            $(".tip").html("&nbsp;");
+            init();
+        });
+
+        function init() {
+            $.get("GetConfig", function (res) {
+                console.log(res);
+                $("form").setForm(res);
+            });
+        }
         function changeBackuptype() {
 
         }
@@ -16,7 +34,9 @@
             $.post("ConnectTest", $("form").serialize(), function (res) {
                 console.log(res);
                 if (res == "True") {
-
+                    $(".testResult").html("Success");
+                } else {
+                    $(".testResult").html("Fail");
                 }
             });
         }
@@ -24,7 +44,7 @@
 </head>
 <body>
     <div class="container">
-        
+
         <div class="form">
             <form name="form" action="saveConfig" method="post">
                 <div>
@@ -64,9 +84,10 @@
                     <tr>
                         <td>Password: </td>
                         <td>
-                            <input type="text" name="password" value="" class="form-control" />
-                            <span class="tip"></span>
+                            <input type="password" name="password" value="" class="form-control" />
+
                             <a href="javascript:connectTest()">Connect Test</a>
+                            <span class="tip testResult"></span>
                         </td>
                     </tr>
                 </table>
@@ -84,7 +105,7 @@
                                 <option value="monthly">Monthly</option>
                             </select>
 
-                            <input type="number" class="time" id="time" /><span class="backupunit" id="backupunit"></span>
+                            <input type="number" name="time" class="time" id="time" /><span class="backupunit" id="backupunit"></span>
                         </td>
                     </tr>
                     <tr>
